@@ -8,7 +8,7 @@
   "sourcePath": "/index.html",
   "accessPoints": [
     {
-      "overrideAppRoute": "customers"
+      "overrideAppRoute": "appcenter"
     },
     {
       "attachPoint": "_apSettingsSettingsList",
