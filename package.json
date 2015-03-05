@@ -1,11 +1,11 @@
 {
-  "name": "starterplugin",
+  "name": "Review-Hub",
   "version": "0.1.0",
-  "description": "starter plugin",
+  "description": "Review hub for surveys collected through Mint Rewards",
   "readme": "README.md",
   "repository" : {
     "type" : "git",
-    "url" : "http://gitlab.corp.intuit.net/qboplugins/starterplugin.git"
+    "url" : "https://github.com/Net-Geek/Review-Hub.git"
   },
   "dependencies": {
     "express": "4.9.x",
