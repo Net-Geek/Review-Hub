@@ -8,7 +8,7 @@
   "sourcePath": "/index.html",
   "accessPoints": [
     {
-      "overrideAppRoute": "appcenter"
+      "overrideAppRoute": "reviews"
     },
     {
       "attachPoint": "_apSettingsSettingsList",
