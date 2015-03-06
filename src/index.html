@@ -189,8 +189,32 @@ window.addEventListener("message", function(a){
       requestsComplete = data.requestsComplete;
 
       $('#requestsSent').text(+requestsSent);
-      $('#surveysComplete').text(+requestsComplete);
-      $('#surveysIncomplete').text(+requestsSent - requestsComplete);
+      $('#reviewsComplete').text(+requestsComplete);
+      $('#reviewsIncomplete').text(+requestsSent - requestsComplete);
+
+      $('#question1').text(data.reviews[0].questions[0].content);
+      $('#question2').text(data.reviews[0].questions[1].content);
+
+      var row="";
+      var answer1="";
+      var answer2="";
+
+      $.each(data.reviews, function (index, data) {
+          $.each(data.responses, function (index, data) {
+              $.each(data, function (index, data) {
+                  if(index == 'content'){
+                      answer1=data;
+                  }
+                  if(index == 'starRating'){
+                      answer2=data;
+                  }
+              })
+
+              row+="<div class='dgrid-row dgrid-row-even ui-state-default' id='dgrid_0-row-55'><table class='dgrid-row-table'><tbody><tr><td class='dgrid-cell dgrid-cell-padding dgrid-column-0 field-name'tabindex='0'><div style='margin-left: 0px'>" + answer1 + "</div></td><td class='dgrid-cell dgrid-cell-padding dgrid-column-1 field-phoneNumber'><div style='margin-left: 0px'>" + answer2 + "</div></td><td class='dgrid-cell dgrid-cell-padding dgrid-column-1 field-phoneNumber'><div style='margin-left: 0px'>N/A</div></td></tr></tbody></table></div></div></div>";
+          })
+      })
+
+      $('#surveyTable').html(row);
 
       $(function () {
               /**
@@ -313,7 +337,7 @@ window.addEventListener("message", function(a){
                   },
                   series: [{
                       type: 'pie',
-                      name: 'Surveys',
+                      name: 'Reviews',
                       innerSize: '50%',
                       data: [
                           ['',   +requestsSent - requestsComplete],
@@ -442,16 +466,15 @@ window.addEventListener("message", function(a){
                             <div class="reportChartDescription"
                                 data-qbo-bind="css:{isFTU: isSampleChartVisible}">
                                 <div class="netProfitValue"
-                                id="requestsSent"
                                 data-dojo-attach-event="onclick:onValueClick"
-                                    data-dojo-attach-point="_netProfitValue">
-                                    </div>
+                                    data-dojo-attach-point="_netProfitValue"
+                                    id="requestsSent"></div>
 
                                     <div class="netProfitText"
                                     data-dojo-attach-event=
                                     "onclick:onValueClick"
                                     data-dojo-attach-point="_netProfitText">
-                                        Survey Requests Sent&nbsp;&nbsp;&nbsp;
+                                        Review Requests Sent&nbsp;&nbsp;&nbsp;
                                     </div>
                                 </div>
 
@@ -462,12 +485,11 @@ window.addEventListener("message", function(a){
                                     data-dojo-attach-event=
                                     "onclick:onValueClick">
                                         <div class="incomeValue"
-                                        id="surveysComplete"
-                                        data-dojo-attach-point="_incomeValue">
-                                        </div>
+                                        data-dojo-attach-point="_incomeValue"
+                                        id="reviewsComplete"></div>
 
                                         <div class="incomeText">
-                                            Surveys Complete
+                                            Reviews Complete
                                         </div>
                                     </div>
 
@@ -475,13 +497,11 @@ window.addEventListener("message", function(a){
                                     data-dojo-attach-event=
                                     "onclick:onValueClick">
                                         <div class="expensesValue"
-                                        id="surveysIncomplete"
-                                        data-dojo-attach-point=
-                                        "_expensesValue">
-                                        </div>
+                                        data-dojo-attach-point="_expensesValue"
+                                        id="reviewsIncomplete"></div>
 
                                         <div class="expensesText">
-                                            Surveys Incomplete
+                                            Reviews Incomplete
                                         </div>
                                     </div>
                                 </div>
@@ -494,13 +514,13 @@ window.addEventListener("message", function(a){
                                     <div class="leg-item">
                                         <span class=
                                         "leg-color-1"></span><span class=
-                                        "leg-content">Surveys Incomplete</span>
+                                        "leg-content">Reviews Incomplete</span>
                                     </div>
 
                                     <div class="leg-item">
                                         <span class=
                                         "leg-color-2"></span><span class=
-                                        "leg-content">Surveys Complete</span>
+                                        "leg-content">Reviews Complete</span>
                                     </div>
                                 </div>
 
@@ -536,7 +556,7 @@ window.addEventListener("message", function(a){
 
                 <div class="clear"></div>
 
-                <div class="page-content surveyNav">
+                <div class="page-content reviewNav">
                     <div class="alert-view alert-error hide" id=
                     "dijit__TemplatedMixin_11">
                         <div class="alert-header">
@@ -556,17 +576,16 @@ window.addEventListener("message", function(a){
 
                     <div class="tallBreakDiv"></div>
 
-                    <div class="floatRight">
-                        <button data-dojo-attach-event="onclick:onNewBtnClick"
-                        data-dojo-attach-point="_newButton" type="button">Add
-                        employee</button>
+                    <div class="stage-header">
+                        <span class="reportListReportName">Customer Review
+                        Results</span>
                     </div>
 
                     <div class="tallBreakDiv"></div>
 
                     <div class="dgrid dgrid-grid ui-widget universal-grid"
-                    data-dojo-attach-point="grid" id="dgrid_3">
-                        <div class="dgrid-hider-menu" id="dgrid_3-hider-menu"
+                    data-dojo-attach-point="grid" id="dgrid_0">
+                        <div class="dgrid-hider-menu" id="dgrid_0-hider-menu"
                         style="display: none;">
                             <div class="hiderMenuConnector"></div>
 
@@ -579,20 +598,20 @@ window.addEventListener("message", function(a){
                                 <div class="dgrid-hider-menu-row">
                                     <input class=
                                     "dgrid-hider-menu-check hider-menu-check-1"
-                                    id="dgrid_3-hider-menu-check-1" type=
+                                    id="dgrid_0-hider-menu-check-1" type=
                                     "checkbox"><label class=
                                     "dgrid-hider-menu-label hider-menu-label-1"
-                                    for="dgrid_3-hider-menu-check-1">Phone
+                                    for="dgrid_0-hider-menu-check-1">Phone
                                     Number</label>
                                 </div>
 
                                 <div class="dgrid-hider-menu-row">
                                     <input class=
                                     "dgrid-hider-menu-check hider-menu-check-2"
-                                    id="dgrid_3-hider-menu-check-2" type=
+                                    id="dgrid_0-hider-menu-check-2" type=
                                     "checkbox"><label class=
                                     "dgrid-hider-menu-label hider-menu-label-2"
-                                    for="dgrid_3-hider-menu-check-2">Email
+                                    for="dgrid_0-hider-menu-check-2">Email
                                     Address</label>
                                 </div>
 
@@ -614,12 +633,12 @@ window.addEventListener("message", function(a){
                                 </div>
 
                                 <div class="dgrid-hider-menu-row rows-per-page"
-                                id="dijit__WidgetsInTemplateMixin_4">
+                                id="dijit__WidgetsInTemplateMixin_0">
                                     <div class=
                                     "dijitInline dijitSelect dijitValidationTextBox dijitDownArrowButton"
                                     data-dojo-attach-point=
                                     "_buttonNode,tableNode,focusNode,_popupStateNode"
-                                    id="dijit_form_Select_1" style=
+                                    id="dijit_form_Select_0" style=
                                     "-webkit-user-select: none;" tabindex="0">
                                         <div class=
                                         "dijitReset dijitInline dijitButtonText"
@@ -629,7 +648,7 @@ window.addEventListener("message", function(a){
                                             "dijitReset dijitInline dijitSelectLabel dijitValidationTextBoxLabel">
                                             150</span>
                                         </div><!--
-    -->
+                    -->
 
                                         <div class=
                                         "dijitReset dijitButtonNode dijitArrowButton dijitDownArrowButton"
@@ -642,153 +661,124 @@ window.addEventListener("message", function(a){
                             </div>
                         </div>
 
+                        <div class="ugrid-actions-bar">
+                            <div class="floatRight">
+                                <button class="combo-button primary"
+                                data-dojo-attach-event="onclick:onNewBtnClick"
+                                data-dojo-attach-point="_newButton" type=
+                                "button">Create Review</button>
+                            </div>
+
+                            <div class="dijitInline dijitTextBox" id=
+                            "widget_dijit_form_TextBox_0">
+                                <input autocomplete="off" class=
+                                "dijitReset dijitInputInner"
+                                data-dojo-attach-point="textbox,focusNode"
+                                data-qbo-bind="value: filter" id=
+                                "dijit_form_TextBox_0" placeholder=
+                                "Filter by results" tabindex="0" type="text"
+                                value="">
+                            </div><span class=
+                            "actions-header hi hi-refresh actions refreshList"
+                            data-dojo-attach-point="actionHeaderNode" id=
+                            "uniqName_15_0" style=
+                            "display: none; font-style: italic"></span>
+                        </div>
+
                         <div class=
                         "dgrid-header dgrid-header-row ui-widget-header">
-                            <table class="dgrid-row-table" id="dgrid_3-header">
-                                <tr>
-                                    <th class=
-                                    "dgrid-cell dgrid-cell-padding dgrid-column-0 field-name"
-                                    tabindex="0">
+                            <table class="dgrid-row-table" id="dgrid_0-header">
+                                <tbody>
+                                    <tr>
+                                        <th class=
+                                        "dgrid-cell-padding dgrid-column-0 field-name"
+                                        tabindex="0">
+                                            <div class=
+                                            "dgrid-resize-header-container dgrid-sort-up">
+                                            <div id="question1" style=
+                                            "text-align: center;">
+                                                    N/A
+                                                </div>
+
+                                                <div class=
+                                                "dgrid-resize-handle resizeNode-0">
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                        <th class=
+                                        "dgrid-cell-padding dgrid-column-1 field-phoneNumber">
                                         <div class=
-                                        "dgrid-resize-header-container dgrid-sort-up">
-                                        <div class="dgrid-sort-arrow ui-icon">
-                                            &nbsp;
-                                            </div>Name
+                                        "dgrid-resize-header-container">
+                                                <div id="question2" style=
+                                                "text-align: center;">
+                                                    N/A
+                                                </div>
 
-                                            <div class=
-                                            "dgrid-resize-handle resizeNode-0">
+                                                <div class=
+                                                "dgrid-resize-handle resizeNode-1">
+                                                </div>
                                             </div>
-                                        </div>
-                                    </th>
+                                        </th>
 
-                                    <th class=
-                                    "dgrid-cell dgrid-cell-padding dgrid-column-1 field-phoneNumber">
-                                    <div class="dgrid-resize-header-container">
-                                        Phone Number
+                                        <th class=
+                                        "dgrid-cell-padding dgrid-column-2 field-email">
+                                        <div class=
+                                        "dgrid-resize-header-container">
+                                                <div id="question3" style=
+                                                "text-align: center;">
+                                                    N/A
+                                                </div>
 
-                                            <div class=
-                                            "dgrid-resize-handle resizeNode-1">
+                                                <div class=
+                                                "dgrid-resize-handle resizeNode-2">
+                                                </div>
                                             </div>
-                                        </div>
-                                    </th>
-
-                                    <th class=
-                                    "dgrid-cell dgrid-cell-padding dgrid-column-2 field-email">
-                                    <div class="dgrid-resize-header-container">
-                                        Email Address
-
-                                            <div class=
-                                            "dgrid-resize-handle resizeNode-2">
-                                            </div>
-                                        </div>
-                                    </th>
-
-                                    <th class=
-                                    "dgrid-cell dgrid-cell-padding dgrid-column-3 field-action">
-                                    action</th>
-                                </tr>
+                                        </th>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
 
                         <div class="dgrid-scroller" style=
                         "-webkit-user-select: text; margin-top: 34px; margin-bottom: 37px;"
                         tabindex="-1">
-                            <div class="dgrid-content ui-widget-content">
-                                <div class=
-                                " dgrid-row dgrid-row-even ui-state-default"
-                                id="dgrid_3-row-55">
-                                    <table class="dgrid-row-table">
-                                        <tr>
-                                            <td class=
-                                            "dgrid-cell dgrid-cell-padding dgrid-column-0 field-name">
-                                            <div style="margin-left: 0px">
-                                                    Emily Platt
-                                                </div>
-                                            </td>
+                            <div id="surveyTable" class="dgrid-content ui-widget-content">
 
-                                            <td class=
-                                            "dgrid-cell dgrid-cell-padding dgrid-column-1 field-phoneNumber dgrid-focus"
-                                            tabindex="0"></td>
+                              <div class=
+                              " dgrid-row dgrid-row-even ui-state-default"
+                              id="dgrid_0-row-55">
+                                  <table class="dgrid-row-table">
+                                      <tbody>
+                                          <tr>
+                                              <td class=
+                                              "dgrid-cell dgrid-cell-padding dgrid-column-0 field-name"
+                                              tabindex="0">
+                                                  <div id="answer1" style=
+                                                  "margin-left: 0px">
+                                                      N/A
+                                                  </div>
+                                              </td>
 
-                                            <td class=
-                                            "dgrid-cell dgrid-cell-padding dgrid-column-2 field-email">
-                                            </td>
+                                              <td class=
+                                              "dgrid-cell dgrid-cell-padding dgrid-column-1 field-phoneNumber">
+                                              <div id="answer2" style=
+                                              "margin-left: 0px">
+                                                      N/A
+                                                  </div>
+                                              </td>
 
-                                            <td class=
-                                            "dgrid-cell dgrid-cell-padding dgrid-column-3 field-action">
-                                            <div class=
-                                            "universal-grid-next-action secondary link-combo-button"
-                                                id="uniqName_56_31">
-                                                    <button class=
-                                                    "combo-button-main"
-                                                    data-dojo-attach-event=
-                                                    "ondijitclick:_onClick,onkeydown:_onButtonKeyDown"
-                                                    data-dojo-attach-point=
-                                                    "buttonNode,titleNode,valueNode,containerNode"
-                                                    id="uniqName_56_31_button"
-                                                    tabindex="0" type=
-                                                    "button">Edit</button><button class="combo-button-toggle dijitDownArrowButton"
-                                                    data-dojo-attach-event=
-                                                    "onkeydown:_onArrowKeyDown"
-                                                    data-dojo-attach-point=
-                                                    "_popupStateNode,focusNode,_buttonNode"
-                                                    style=
-                                                    "-webkit-user-select: none;"
-                                                    tabindex="0" type=
-                                                    "button"></button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-
-                                <div class=
-                                " dgrid-row ui-state-default dgrid-row-odd" id=
-                                "dgrid_3-row-54">
-                                    <table class="dgrid-row-table">
-                                        <tr>
-                                            <td class=
-                                            "dgrid-cell dgrid-cell-padding dgrid-column-0 field-name">
-                                            <div style="margin-left: 0px">
-                                                    John Johnson
-                                                </div>
-                                            </td>
-
-                                            <td class=
-                                            "dgrid-cell dgrid-cell-padding dgrid-column-1 field-phoneNumber">
-                                            (540) 555-9645</td>
-
-                                            <td class=
-                                            "dgrid-cell dgrid-cell-padding dgrid-column-2 field-email">
-                                            </td>
-
-                                            <td class=
-                                            "dgrid-cell dgrid-cell-padding dgrid-column-3 field-action">
-                                            <div class=
-                                            "universal-grid-next-action secondary link-combo-button"
-                                                id="uniqName_56_32">
-                                                    <button class=
-                                                    "combo-button-main"
-                                                    data-dojo-attach-event=
-                                                    "ondijitclick:_onClick,onkeydown:_onButtonKeyDown"
-                                                    data-dojo-attach-point=
-                                                    "buttonNode,titleNode,valueNode,containerNode"
-                                                    id="uniqName_56_32_button"
-                                                    tabindex="0" type=
-                                                    "button">Edit</button><button class="combo-button-toggle dijitDownArrowButton"
-                                                    data-dojo-attach-event=
-                                                    "onkeydown:_onArrowKeyDown"
-                                                    data-dojo-attach-point=
-                                                    "_popupStateNode,focusNode,_buttonNode"
-                                                    style=
-                                                    "-webkit-user-select: none;"
-                                                    tabindex="0" type=
-                                                    "button"></button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
+                                              <td class=
+                                              "dgrid-cell dgrid-cell-padding dgrid-column-1 field-phoneNumber">
+                                              <div id="answer2" style=
+                                              "margin-left: 0px">
+                                                      N/A
+                                                  </div>
+                                              </td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
                             </div>
                         </div>
 
