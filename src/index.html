@@ -181,142 +181,155 @@ window.addEventListener("message", function(a){
     }
     </script>
     <script>
-$(function () {
-        /**
-         * Grid-light theme for Highcharts JS
-         * @author Torstein Honsi
-         */
 
-    // Load the fonts
-        Highcharts.createElement('link', {
-            href: '//fonts.googleapis.com/css?family=Dosis:400,600',
-            rel: 'stylesheet',
-            type: 'text/css'
-        }, null, document.getElementsByTagName('head')[0]);
+    var awsURL="http://teamwon.elasticbeanstalk.com/api/getBusiness?businessId=business1"
 
-        Highcharts.theme = {
-            colors: ["#50A6BE","#ABCC00"],
-            chart: {
-                backgroundColor: null,
-                style: {
-                    fontFamily: "Dosis, sans-serif"
-                }
-            },
-            title: {
-                style: {
-                    fontSize: '16px',
-                    fontWeight: 'bold',
-                    textTransform: 'uppercase'
-                }
-            },
-            tooltip: {
-                borderWidth: 0,
-                backgroundColor: 'rgba(219,219,216,0)',
-                shadow: false
-            },
-            legend: {
-                itemStyle: {
-                    fontWeight: 'bold',
-                    fontSize: '13px'
-                }
-            },
-            xAxis: {
-                gridLineWidth: 1,
-                labels: {
-                    style: {
-                        fontSize: '12px'
-                    }
-                }
-            },
-            yAxis: {
-                minorTickInterval: 'auto',
-                title: {
-                    style: {
-                        textTransform: 'uppercase'
-                    }
-                },
-                labels: {
-                    style: {
-                        fontSize: '12px'
-                    }
-                }
-            },
-            plotOptions: {
-                candlestick: {
-                    lineColor: '#404048'
-                }
-            },
+    $.getJSON(awsURL, function(data) {
+      requestsSent = data.requestsSent;
+      requestsComplete = data.requestsComplete;
+
+      $('#requestsSent').text(+requestsSent);
+      $('#surveysComplete').text(+requestsComplete);
+      $('#surveysIncomplete').text(+requestsSent - requestsComplete);
+
+      $(function () {
+              /**
+               * Grid-light theme for Highcharts JS
+               * @author Torstein Honsi
+               */
+
+          // Load the fonts
+              Highcharts.createElement('link', {
+                  href: '//fonts.googleapis.com/css?family=Dosis:400,600',
+                  rel: 'stylesheet',
+                  type: 'text/css'
+              }, null, document.getElementsByTagName('head')[0]);
+
+              Highcharts.theme = {
+                  colors: ["#50A6BE","#ABCC00"],
+                  chart: {
+                      backgroundColor: null,
+                      style: {
+                          fontFamily: "Dosis, sans-serif"
+                      }
+                  },
+                  title: {
+                      style: {
+                          fontSize: '16px',
+                          fontWeight: 'bold',
+                          textTransform: 'uppercase'
+                      }
+                  },
+                  tooltip: {
+                      borderWidth: 0,
+                      backgroundColor: 'rgba(219,219,216,0)',
+                      shadow: false
+                  },
+                  legend: {
+                      itemStyle: {
+                          fontWeight: 'bold',
+                          fontSize: '13px'
+                      }
+                  },
+                  xAxis: {
+                      gridLineWidth: 1,
+                      labels: {
+                          style: {
+                              fontSize: '12px'
+                          }
+                      }
+                  },
+                  yAxis: {
+                      minorTickInterval: 'auto',
+                      title: {
+                          style: {
+                              textTransform: 'uppercase'
+                          }
+                      },
+                      labels: {
+                          style: {
+                              fontSize: '12px'
+                          }
+                      }
+                  },
+                  plotOptions: {
+                      candlestick: {
+                          lineColor: '#404048'
+                      }
+                  },
 
 
-            // General
-            background2: '#F0F0EA'
+                  // General
+                  background2: '#F0F0EA'
 
-        };
+              };
 
-    // Apply the theme
-        Highcharts.setOptions(Highcharts.theme);
+          // Apply the theme
+              Highcharts.setOptions(Highcharts.theme);
 
 
 
-        $('#container').highcharts({
-            chart: {
-                height: 330,
-                plotBackgroundColor: null,
-                plotBorderWidth: 0,
-                plotShadow: false
-            },
-            title: {
-                text: '',
-                align: 'center',
-                verticalAlign: 'middle',
-                y: 50
-            },
-            credits: {
-              enabled: false
-            },
-            legend: {
-                align: 'right',
-                verticalAlign: 'top',
-                layout: 'vertical',
-                x: 0,
-                y: 100
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%<\/b>'
-            },
-            plotOptions: {
-                pie: {
-                    dataLabels: {
-                        enabled: true,
-                        distance: -50,
-                        style: {
-                            fontWeight: 'bold',
-                            color: 'white',
-                            textShadow: '0px 1px 2px black'
-                        }
-                    },
-                    startAngle: -90,
-                    endAngle: 90,
-                    center: ['50%', '75%']
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: 'Surveys',
-                innerSize: '50%',
-                data: [
-                    ['',   648.8],
-                    ['',   384.0],
-                    {
-                        name: 'Others',
-                        y: 0.7,
-                        dataLabels: {
-                            enabled: false
-                        }
-                    }
-                ]
-            }]
-        });
+              $('#container').highcharts({
+                  chart: {
+                      height: 330,
+                      plotBackgroundColor: null,
+                      plotBorderWidth: 0,
+                      plotShadow: false
+                  },
+                  title: {
+                      text: '',
+                      align: 'center',
+                      verticalAlign: 'middle',
+                      y: 50
+                  },
+                  credits: {
+                    enabled: false
+                  },
+                  legend: {
+                      align: 'right',
+                      verticalAlign: 'top',
+                      layout: 'vertical',
+                      x: 0,
+                      y: 100
+                  },
+                  tooltip: {
+                      pointFormat: '{series.name}: <b>{point.percentage:.1f}%<\/b>'
+                  },
+                  plotOptions: {
+                      pie: {
+                          dataLabels: {
+                              enabled: true,
+                              distance: -50,
+                              style: {
+                                  fontWeight: 'bold',
+                                  color: 'white',
+                                  textShadow: '0px 1px 2px black'
+                              }
+                          },
+                          startAngle: -90,
+                          endAngle: 90,
+                          center: ['50%', '75%']
+                      }
+                  },
+                  series: [{
+                      type: 'pie',
+                      name: 'Surveys',
+                      innerSize: '50%',
+                      data: [
+                          ['',   +requestsSent - requestsComplete],
+                          ['',   +requestsComplete],
+                          {
+                              name: 'Others',
+                              y: 0.7,
+                              dataLabels: {
+                                  enabled: false
+                              }
+                          }
+                      ]
+                  }]
+              });
+          });
+
     });
     </script>
     <style>
@@ -429,9 +442,9 @@ $(function () {
                             <div class="reportChartDescription"
                                 data-qbo-bind="css:{isFTU: isSampleChartVisible}">
                                 <div class="netProfitValue"
+                                id="requestsSent"
                                 data-dojo-attach-event="onclick:onValueClick"
                                     data-dojo-attach-point="_netProfitValue">
-                                        1,032
                                     </div>
 
                                     <div class="netProfitText"
@@ -449,8 +462,8 @@ $(function () {
                                     data-dojo-attach-event=
                                     "onclick:onValueClick">
                                         <div class="incomeValue"
+                                        id="surveysComplete"
                                         data-dojo-attach-point="_incomeValue">
-                                            384
                                         </div>
 
                                         <div class="incomeText">
@@ -462,9 +475,9 @@ $(function () {
                                     data-dojo-attach-event=
                                     "onclick:onValueClick">
                                         <div class="expensesValue"
+                                        id="surveysIncomplete"
                                         data-dojo-attach-point=
                                         "_expensesValue">
-                                            648
                                         </div>
 
                                         <div class="expensesText">
